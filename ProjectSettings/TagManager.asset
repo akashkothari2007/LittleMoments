@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - RockTarget
+  - Knight
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Vegetation
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: water
+    uniqueID: 4229192197
+    locked: 0
+  - name: ground
+    uniqueID: 1579500147
+    locked: 0
+  - name: character
+    uniqueID: 798566409
+    locked: 0
+  - name: vegetation
+    uniqueID: 2211219723
+    locked: 0
+  - name: housing
+    uniqueID: 4054590837
+    locked: 0
+  - name: furniture
+    uniqueID: 2584576249
+    locked: 0
+  - name: New Layer 7
+    uniqueID: 1125806671
+    locked: 0
+  m_RenderingLayers:
+  - Default
