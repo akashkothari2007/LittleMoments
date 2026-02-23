@@ -63,6 +63,8 @@ public class SpecialEffects : MonoBehaviour
         {
             Debug.LogWarning("SpecialEffects: Volume/Profile not assigned.");
         }
+        currentTrackIndex = Random.Range(0, playlist.Length);
+        PlayNext();
     }
 
     void Update()

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_GAME_/Scenes/InsideHouse.unity
+    guid: fe61d70c742814ee9a879340d2601ee8
+  - enabled: 1
     path: Assets/_GAME_/Scenes/LoadingScreen.unity
     guid: 904add9b196794387a0150298530e900
   - enabled: 1
