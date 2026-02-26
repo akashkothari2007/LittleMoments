@@ -15,6 +15,7 @@ public class Player_Interactor : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // left click
+        
         {
             Vector2 mouseWorldPos = cam.ScreenToWorldPoint(Input.mousePosition);
 

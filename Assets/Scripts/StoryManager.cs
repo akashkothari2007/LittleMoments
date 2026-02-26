@@ -326,6 +326,8 @@ public class StoryManager : MonoBehaviour
         specialEffects.blackScreen = true;
         specialEffects.musicVolume = 0f;
         yield return new WaitForSeconds(3f);
+        //switch scenes
+        UnityEngine.SceneManagement.SceneManager.LoadScene("InsideHouse");
         // tbd
 
     }
