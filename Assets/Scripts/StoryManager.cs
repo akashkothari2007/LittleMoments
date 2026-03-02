@@ -71,6 +71,7 @@ public class StoryManager : MonoBehaviour
     public GameObject knight;
     public AudioClip guitarClip;
     public FireplaceScript campfire;
+    public GameObject guitar;
 
     [Header("Enter House")]
     public string[] enterHouseDialogues;
@@ -294,6 +295,7 @@ public class StoryManager : MonoBehaviour
         specialEffects.blackScreen = true;
 
         yield return new WaitForSeconds(3f);
+        guitar.SetActive(false);
         player.SetActive(false);
         knight.SetActive(false);
         cutsceneObjects.SetActive(true);
