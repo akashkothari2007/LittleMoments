@@ -23,7 +23,7 @@ public class FuseBox : MonoBehaviour, IInteractable
     }
     public void Interact(Inventory inventory)
     {
-        if (gameComplete) return;
+        if (gameComplete || storyManager.currentStoryState != StoryManager2.StoryState.TurnOnLights) return;
         fuseBoxUI.SetActive(true);
         Cursor.visible = true;
         Player.GetComponent<Player_Controller>().enabled = false;

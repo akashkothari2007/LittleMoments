@@ -7,6 +7,7 @@ public class StoryManager2 : MonoBehaviour
     public enum StoryState
     {
         TurnOnLights,
+        FixPicturePuzzle,
         StokeFire,
         TurnOnTV,
         None,
@@ -38,6 +39,12 @@ public class StoryManager2 : MonoBehaviour
     public GameObject lights;
     public string[] turnOnLightsDialogues;
     public GameObject fuseBoxGlow;
+
+    [Header("Fix Picture Puzzle")]
+
+    public GameObject picturePuzzle;
+    public string[] fixPicturePuzzleDialogues;
+    public GameObject picturePuzzleGlow;
 
     [Header("Stoke Fire")]
     public GameObject fire;
@@ -80,8 +87,8 @@ public class StoryManager2 : MonoBehaviour
         if (currentStoryState == StoryState.TurnOnLights)
         {
             lights.SetActive(true);
-            currentStoryState = StoryState.StokeFire;
-            currentDialogues = stokeFireDialogues;
+            currentStoryState = StoryState.FixPicturePuzzle;
+            currentDialogues = fixPicturePuzzleDialogues;
             currentIndex = -1;
             DialogueNext();
             ToggleDialogue(true);
@@ -89,6 +96,23 @@ public class StoryManager2 : MonoBehaviour
             Debug.Log("Fuse box fixed, going to next story state!");
 
             fuseBoxGlow.SetActive(false);
+            picturePuzzleGlow.SetActive(true);
+        }
+    }
+    public void OnPicturePuzzleFix()
+    {
+        if (currentStoryState == StoryState.FixPicturePuzzle)
+        {
+            picturePuzzle.GetComponent<SpriteRenderer>().color = Color.white;
+            
+            currentStoryState = StoryState.StokeFire;
+            Debug.Log("Picture puzzle fixed, going to next story state!");
+            currentDialogues = stokeFireDialogues;
+            currentIndex = -1;
+            DialogueNext();
+            ToggleDialogue(true);
+
+            picturePuzzleGlow.SetActive(false);
             fireGlow.SetActive(true);
         }
     }
