@@ -9,10 +9,6 @@ public class StoryManager2 : MonoBehaviour
         TurnOnLights,
         StokeFire,
         TurnOnTV,
-        LightCampfire,
-        FinishLightCampfire,
-        CampfireCutscene,
-        EnterHouse,
         None,
     }
     [Header("Story State")]
@@ -41,14 +37,17 @@ public class StoryManager2 : MonoBehaviour
     [Header("Turn On Lights")]
     public GameObject lights;
     public string[] turnOnLightsDialogues;
+    public GameObject fuseBoxGlow;
 
     [Header("Stoke Fire")]
     public GameObject fire;
     public string[] stokeFireDialogues;
+    public GameObject fireGlow;
 
     [Header("Turn on TV")]
     public GameObject tv;
     public string[] turnOnTVDialogues;
+    public GameObject tvGlow;
 
 
 
@@ -88,6 +87,9 @@ public class StoryManager2 : MonoBehaviour
             ToggleDialogue(true);
             specialEffects.night = false;
             Debug.Log("Fuse box fixed, going to next story state!");
+
+            fuseBoxGlow.SetActive(false);
+            fireGlow.SetActive(true);
         }
     }
     public void OnFireStoked()
@@ -101,6 +103,9 @@ public class StoryManager2 : MonoBehaviour
             currentIndex = -1;
             DialogueNext();
             ToggleDialogue(true);
+
+            fireGlow.SetActive(false);
+            tvGlow.SetActive(true);
         }
     }
     public void OnTVTurnedOn()
@@ -112,6 +117,8 @@ public class StoryManager2 : MonoBehaviour
             ToggleDialogue(false);
             Debug.Log("TV turned on, byebye");
             // set dialogues for next state here when we have them
+
+            tvGlow.SetActive(false);
         }
     }
 
