@@ -10,7 +10,12 @@ public class TurnTV : MonoBehaviour, IInteractable
     public Player_Controller pc;
     public VideoPlayer videoPlayer;
     public RawImage videoScreen; // the RawImage showing the render texture
-    public AudioSource videoAudio;
+    public AudioSource sillyAudio;
+    public AudioSource fireworkAudio;
+    private bool fadeAudio = false;
+    float elapsed = 0f;
+    public float fadeAudioDuration = 1f;
+    public GameObject happyText;
 
     [Header("Antenna")]
     public Transform antenna; // the antenna gameobject (not the sprite child)
@@ -26,9 +31,17 @@ public class TurnTV : MonoBehaviour, IInteractable
     private bool gameComplete = false;
     private float holdTimer = 0f;
     private float mouseDragSensitivity = 1.5f;
+    private Coroutine currentCoroutine;
 
     public void Interact(Inventory inventory)
     {
+        if (storyManager.currentStoryState == StoryManager2.StoryState.End)
+        {
+            if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+            // if we interact with the TV after the cutscene, just replay the cutscene
+            currentCoroutine = StartCoroutine(VideoCoroutine());
+            return;
+        }
         if (gameComplete) return;
         if (storyManager.currentStoryState != StoryManager2.StoryState.TurnOnTV) return;
         if (isTuning) return; // prevent re-interacting while tuning
@@ -68,6 +81,17 @@ public class TurnTV : MonoBehaviour, IInteractable
         else
         {
             holdTimer = 0f; // reset if she moves out
+        }
+
+        if (fadeAudio) {
+            elapsed += Time.deltaTime;
+            sillyAudio.volume = Mathf.Lerp(sillyAudio.volume, 0f, elapsed / fadeAudioDuration );
+            if (sillyAudio.volume <= 0.01f) {
+                sillyAudio.Stop();
+                sillyAudio.volume = 0f; 
+                fadeAudio = false;
+            }
+
         }
     }
 
@@ -120,6 +144,13 @@ public class TurnTV : MonoBehaviour, IInteractable
         // hide video
         videoScreen.gameObject.SetActive(false);
 
+        happyText.SetActive(true);
+        sillyAudio.Play();
+        yield return new WaitForSeconds(1f); // let the audio start before fading
+        fadeAudio = true;
+        fireworkAudio.Play();
+        yield return new WaitForSeconds(4f); // let the player see the happy text
+        happyText.SetActive(false);
         // fade back in
         sp.blackScreen = false;
         yield return new WaitForSeconds(1f); // give it a moment to fade in

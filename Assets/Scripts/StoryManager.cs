@@ -73,6 +73,7 @@ public class StoryManager : MonoBehaviour
     public FireplaceScript campfire;
     public GameObject guitar;
     public AudioClip guitarClip2;
+    public bool skip = false;
 
     [Header("Enter House")]
     public string[] enterHouseDialogues;
@@ -303,13 +304,26 @@ public class StoryManager : MonoBehaviour
 
         specialEffects.blackScreen = false;
 
-        yield return new WaitForSeconds(2f);
 
+   
         audioSource.PlayOneShot(guitarClip);
-        yield return new WaitForSeconds(guitarClip.length);
-        audioSource.PlayOneShot(guitarClip2);
-        yield return new WaitForSeconds(guitarClip2.length);
+        float t = 0f;
+        while (t < guitarClip.length && !skip)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
 
+        audioSource.PlayOneShot(guitarClip2);
+        t = 0f;
+        while (t < guitarClip2.length && !skip)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+        
+
+        audioSource.Stop();
         specialEffects.blackScreen = true;
         yield return new WaitForSeconds(4f);
         specialEffects.night = false;
@@ -335,6 +349,11 @@ public class StoryManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("InsideHouse");
         // tbd
 
+    }
+
+    public void SkipCutscene() {
+        Debug.Log("Skip cutscene");
+        skip = true;
     }
 
 
