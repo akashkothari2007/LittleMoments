@@ -10,7 +10,9 @@ public class StoryManager2 : MonoBehaviour
         FixPicturePuzzle,
         StokeFire,
         TurnOnTV,
-        None,
+        TVCutScene,
+        End,
+        None
     }
     [Header("Story State")]
     public StoryState currentStoryState = StoryState.None;
@@ -55,6 +57,10 @@ public class StoryManager2 : MonoBehaviour
     public GameObject tv;
     public string[] turnOnTVDialogues;
     public GameObject tvGlow;
+
+    [Header("End")]
+    public string[] endDialogues;
+    public GameObject[] interactiveObjectsGlow;
 
 
 
@@ -120,7 +126,6 @@ public class StoryManager2 : MonoBehaviour
     {
         if (currentStoryState == StoryState.StokeFire)
         {
-            fire.SetActive(true);
             currentStoryState = StoryState.TurnOnTV;
             Debug.Log("Fire stoked, going to next story state!");
             currentDialogues = turnOnTVDialogues;
@@ -137,12 +142,29 @@ public class StoryManager2 : MonoBehaviour
         if (currentStoryState == StoryState.TurnOnTV)
         {
             tv.SetActive(true);
-            currentStoryState = StoryState.None;
+            currentStoryState = StoryState.TVCutScene;
             ToggleDialogue(false);
-            Debug.Log("TV turned on, byebye");
+            Debug.Log("TV turned on, onto cutscene");
             // set dialogues for next state here when we have them
 
             tvGlow.SetActive(false);
+        }
+    }
+    public void OnCutSceneEnd()
+    {
+        if (currentStoryState == StoryState.TVCutScene)
+        {
+            currentStoryState = StoryState.End;
+            Debug.Log("Cutscene ended, story complete!");
+            currentDialogues = endDialogues;
+            currentIndex = -1;
+            DialogueNext();
+            ToggleDialogue(true);
+            foreach (GameObject glow in interactiveObjectsGlow)
+            {
+                glow.SetActive(true);
+            }
+
         }
     }
 
