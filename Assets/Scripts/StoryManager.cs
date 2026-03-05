@@ -72,6 +72,7 @@ public class StoryManager : MonoBehaviour
     public AudioClip guitarClip;
     public FireplaceScript campfire;
     public GameObject guitar;
+    public AudioClip guitarClip2;
 
     [Header("Enter House")]
     public string[] enterHouseDialogues;
@@ -306,6 +307,8 @@ public class StoryManager : MonoBehaviour
 
         audioSource.PlayOneShot(guitarClip);
         yield return new WaitForSeconds(guitarClip.length);
+        audioSource.PlayOneShot(guitarClip2);
+        yield return new WaitForSeconds(guitarClip2.length);
 
         specialEffects.blackScreen = true;
         yield return new WaitForSeconds(4f);
