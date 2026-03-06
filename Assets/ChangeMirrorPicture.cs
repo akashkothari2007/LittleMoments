@@ -5,7 +5,13 @@ public class ChangeMirrorPicture : MonoBehaviour, IInteractable
     public SpriteRenderer[] pictures;
     private SpriteRenderer curImage;
     private SpriteRenderer prevImage;
+    public SpriteRenderer firstPic;
     public float fadeSpeed = 1f;
+    public bool open = false;
+    public RectTransform rectTransform;
+    public float finalScale = 1.5f;
+    public float initialScale = 1f;
+    public float duration = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,11 +22,13 @@ public class ChangeMirrorPicture : MonoBehaviour, IInteractable
     // Update is called once per frame
     void Update()
     {
-
+        if (open && rectTransform.localScale.x < finalScale)
+        {
+            rectTransform.localScale += Vector3.one * (finalScale - initialScale) / duration * Time.deltaTime;
+        }
         if (prevImage && prevImage.color.a > 0)
         {
             Color prevColor = prevImage.color;
-            prevColor.a -= fadeSpeed * Time.deltaTime;
             prevImage.color = prevColor;
         }
         if (curImage && curImage.color.a < 1)       
@@ -32,6 +40,13 @@ public class ChangeMirrorPicture : MonoBehaviour, IInteractable
     }
     public void Interact(Inventory inventory)
     {
+        if (!open) {
+            transform.GetComponent<AudioSource>().Play();
+            curImage = firstPic;
+            open = true;
+            return;
+        }
+        
         if (prevImage)
         {
             Color curColor = prevImage.color;
