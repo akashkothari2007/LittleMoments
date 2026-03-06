@@ -3,9 +3,8 @@ using UnityEngine;
 public class ChangeMirrorPicture : MonoBehaviour, IInteractable
 {
     public SpriteRenderer[] pictures;
-    private SpriteRenderer curImage;
-    private SpriteRenderer prevImage;
-    public SpriteRenderer firstPic;
+    public SpriteRenderer curImage;
+    public SpriteRenderer prevImage;
     public float fadeSpeed = 1f;
     public bool open = false;
     public RectTransform rectTransform;
@@ -26,9 +25,11 @@ public class ChangeMirrorPicture : MonoBehaviour, IInteractable
         {
             rectTransform.localScale += Vector3.one * (finalScale - initialScale) / duration * Time.deltaTime;
         }
+
         if (prevImage && prevImage.color.a > 0)
         {
             Color prevColor = prevImage.color;
+            prevColor.a -= fadeSpeed * Time.deltaTime;
             prevImage.color = prevColor;
         }
         if (curImage && curImage.color.a < 1)       
@@ -40,9 +41,10 @@ public class ChangeMirrorPicture : MonoBehaviour, IInteractable
     }
     public void Interact(Inventory inventory)
     {
+        Debug.Log(open);
         if (!open) {
             transform.GetComponent<AudioSource>().Play();
-            curImage = firstPic;
+            curImage = pictures[0];
             open = true;
             return;
         }
